@@ -1,0 +1,19 @@
+---
+- name: Gather Hostname and Kernel Version from Raspberry Pis
+  hosts: raspberries
+  gather_facts: yes
+  tasks:
+    - name: Collect only specific facts
+      ansible.builtin.setup:
+        gather_subset:
+          - hardware
+          - network
+          - system
+
+    - name: Show Hostname
+      debug:
+        msg: "Hostname: {{ ansible_facts.hostname }}"
+
+    - name: Show Kernel Version
+      debug:
+        msg: "Kernel Version: {{ ansible_facts.kernel }}"
