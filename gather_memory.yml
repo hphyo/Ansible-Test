@@ -1,0 +1,21 @@
+---
+- name: Gather CPU and Memory stats from Raspberry Pis
+  hosts: raspberries
+  gather_facts: yes
+  tasks:
+    # - name: Gather CPU Information
+    #   ansible.builtin.shell: "lscpu"
+    #   register: cpu_info
+
+    # - name: Display CPU Information
+    #   debug:
+    #     var: cpu_info.stdout
+
+    - name: Gather Memory Information
+      ansible.builtin.shell: 
+          cmd: free -h | grep Mem | awk  '{print "used :",$3,"Avail :",$7}'
+      register: memory_info
+
+    - name: Display Memory Information
+      debug:
+        var: memory_info.stdout
